@@ -6,7 +6,6 @@ import (
 
 	"github.com/lucavallin/transit/pkg/parser/csv"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/lucavallin/transit/pkg/client"
 	"github.com/lucavallin/transit/pkg/provider"
 	"github.com/lucavallin/transit/pkg/transaction"
@@ -34,8 +33,18 @@ func main() {
 		os.Exit(1)
 	}
 
-	spew.Dump(transactions)
+	fmt.Printf("> Analyzing outgoing transactions...\n\n")
+	for name, amount := range transactions.ReportByName(transaction.Outgoing) {
+		fmt.Printf("%s: %.2f\n", name, amount)
+	}
+	fmt.Printf("\nTotal: %.2f\n", transactions.GetTotalAmount(transaction.Outgoing))
 
-	fmt.Printf("Incoming transactions total: %f\n", transactions.GetTotalAmount(transaction.DirectionIn))
-	fmt.Printf("Outgoing transactions total: %f\n", transactions.GetTotalAmount(transaction.DirectionOut))
+	fmt.Println()
+	fmt.Println()
+
+	fmt.Printf("> Analyzing incoming transactions...\n\n")
+	for name, amount := range transactions.ReportByName(transaction.Incoming) {
+		fmt.Printf("%s: %.2f\n", name, amount)
+	}
+	fmt.Printf("\nTotal: %.2f\n", transactions.GetTotalAmount(transaction.Incoming))
 }

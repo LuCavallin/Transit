@@ -24,15 +24,15 @@ func (o Ing) Parse(records [][]string) (transaction.Collection, error) {
 	for _, record := range records {
 		// Init transaction and append to slice
 		transaction := &transaction.Transaction{
-			Date:        o.parseDate(record[0]),
-			Description: record[1],
-			Account:     record[2],
-			ToAccount:   record[3],
-			Code:        record[4],
-			Direction:   o.parseDirection(record[5]),
-			Amount:      o.parseAmount(record[6]),
-			Type:        record[7],
-			Notes:       record[8],
+			Date:      o.parseDate(record[0]),
+			Name:      record[1],
+			Account:   record[2],
+			ToAccount: record[3],
+			Code:      record[4],
+			Direction: o.parseDirection(record[5]),
+			Amount:    o.parseAmount(record[6]),
+			Type:      record[7],
+			Notes:     record[8],
 		}
 		transactions = append(transactions, transaction)
 	}
@@ -62,11 +62,11 @@ func (o Ing) parseAmount(rawAmount string) float64 {
 
 // Converts csv direction to transaction.Direction
 func (o Ing) parseDirection(rawDirection string) int8 {
-	var direction int8 = 1
+	direction := transaction.Incoming
 
 	// Most transactions are outgoing, saves a check
 	if rawDirection == "Af" {
-		direction = -1
+		direction = transaction.Outgoing
 	}
 
 	return direction
