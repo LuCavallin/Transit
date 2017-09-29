@@ -1,0 +1,6 @@
+hash: 84c52a5c7b184f6b9211c92a91567041a186fe6429c2445c90fa352b9f0e334b
+updated: 2017-09-29T21:19:53.583542896+02:00
+imports:
+- name: github.com/icrowley/fake
+  version: e64cc2cf92049a299f359734c6ea76073f2a8b2c
+testImports: []
